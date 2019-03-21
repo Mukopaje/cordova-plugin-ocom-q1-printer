@@ -1,0 +1,17 @@
+{
+  "name": "ZPOSQ1Printer",
+  "version": "1.0.0",
+  "description": "",
+  "cordova": {
+    "id": "com.plugin.zpos",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "Mukopaje Singogo",
+  "license": "ISC"
+}
