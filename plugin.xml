@@ -34,6 +34,8 @@
 <source-file src="src/android/com/plugin/zpos/ZPOSQ1Printer.java" target-dir="src/com/plugin/zpos/" />
 <source-file src="src/android/com/plugin/zpos/ThreadPoolManager.java" target-dir="src/android/com/plugin/zpos/" />
 <source-file src="src/android/com/plugin/zpos/PrinterStatusReceiver.java" target-dir="src/android/com/plugin/zpos/" />
+<source-file src="src/android/com/plugin/zpos/utils/HandlerUtils.java" target-dir="src/android/com/plugin/zpos/utils/" />
+<source-file src="src/android/com/plugin/zpos/utils/BytesUtil.java" target-dir="src/android/com/plugin/zpos/utils/" />
 <source-file src="src/android/com/iposprinter/iposprinterservice/IPosPrinterService.aidl" target-dir="src/com/iposprinter/iposprinterservice/" />
  <source-file src="src/android/com/iposprinter/iposprinterservice/IPosPrinterCallback.aidl" target-dir="src/com/iposprinter/iposprinterservice/" />
 </platform>
