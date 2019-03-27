@@ -58,8 +58,6 @@ public class PrinterStatusReceiver extends BroadcastReceiver {
         jsonObj.put("type", type);
         jsonObj.put("action", action);
 
-        Toast.makeText(context, "Printer Status: "+action, Toast.LENGTH_SHORT).show();
-
         if(action == null)
         {
             Log.d(TAG,"IPosPrinterStatusListener onReceive action = null");

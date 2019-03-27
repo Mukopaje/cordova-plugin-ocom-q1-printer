@@ -53,6 +53,19 @@ module.exports = {
     },
     printerStatusStopListener: function () {
         exec(function () {}, function () {}, "ZPOSQ1Printer", "printerStatusStopListener", []);
+    },
+    printTable: function (data, resolve, reject) {
+        exec(resolve, reject, "ZPOSQ1Printer", "printTable", [data]);
+    },
+    printSpecFormatText: function (txt, ff, fs, al, resolve, reject) {
+        exec(resolve, reject, "ZPOSQ1Printer", "printSpecFormatText", [txt, ff, fs, al]);
+    },
+    performPrint: function (resolve, reject) {
+        exec(resolve, reject, "ZPOSQ1Printer", "performPrint", []);
+    },
+    printSelf: function () {
+        exec(function () {}, function () {}, "ZPOSQ1Printer", "printSelf", []);
     }
 
+    
 }
