@@ -1,5 +1,5 @@
 {
-  "name": "ZPOSQ1Printer",
+  "name": "cordova-plugin-ocom-q1-printer",
   "version": "1.0.0",
   "description": "",
   "cordova": {
