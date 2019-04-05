@@ -91,7 +91,7 @@ public class ZPOSQ1Printer extends CordovaPlugin {
         public void onServiceConnected(ComponentName name, IBinder service) {
             mIPosPrinterService = IPosPrinterService.Stub.asInterface(service);
             // setButtonEnable(true);
-            Toast.makeText(webView.getContext(), "Service connected " + mIPosPrinterService, Toast.LENGTH_LONG).show();
+           // Toast.makeText(webView.getContext(), "Service connected " + mIPosPrinterService, Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -125,43 +125,43 @@ public class ZPOSQ1Printer extends CordovaPlugin {
         }
     };
 
-    private HandlerUtils.IHandlerIntent iHandlerIntent = new HandlerUtils.IHandlerIntent() {
-        @Override
-        public void handlerIntent(Message msg) {
-            switch (msg.what) {
-            case MSG_TEST:
-                break;
-            case MSG_IS_NORMAL:
-                if (getPrinterStatus() == PRINTER_NORMAL) {
-                    // loopPrint(loopPrintFlag);
-                }
-                break;
-            case MSG_IS_BUSY:
-                Toast.makeText(webView.getContext(), "Printing...", Toast.LENGTH_SHORT).show();
-                break;
-            case MSG_PAPER_LESS:
-                // loopPrintFlag = DEFAULT_LOOP_PRINT;
-                Toast.makeText(webView.getContext(), "Printer Out of paper", Toast.LENGTH_SHORT).show();
-                break;
-            case MSG_PAPER_EXISTS:
-                Toast.makeText(webView.getContext(), "Paper available", Toast.LENGTH_SHORT).show();
-                break;
-            case MSG_THP_HIGH_TEMP:
-                Toast.makeText(webView.getContext(), "Printer high temp", Toast.LENGTH_SHORT).show();
-                break;
-            case MSG_MOTOR_HIGH_TEMP:
-                // loopPrintFlag = DEFAULT_LOOP_PRINT;
-                Toast.makeText(webView.getContext(), "Printer motor high temp", Toast.LENGTH_SHORT).show();
-                handler.sendEmptyMessageDelayed(MSG_MOTOR_HIGH_TEMP_INIT_PRINTER, 180000); // 马达高温报警，等待3分钟后复位打印机
-                break;
-            case MSG_MOTOR_HIGH_TEMP_INIT_PRINTER:
-                printerInit2();
-                break;
-            default:
-                break;
-            }
-        }
-    };
+    // private HandlerUtils.IHandlerIntent iHandlerIntent = new HandlerUtils.IHandlerIntent() {
+    //     @Override
+    //     public void handlerIntent(Message msg) {
+    //         switch (msg.what) {
+    //         case MSG_TEST:
+    //             break;
+    //         case MSG_IS_NORMAL:
+    //             if (getPrinterStatus() == PRINTER_NORMAL) {
+    //                 // loopPrint(loopPrintFlag);
+    //             }
+    //             break;
+    //         case MSG_IS_BUSY:
+    //             Toast.makeText(webView.getContext(), "Printing...", Toast.LENGTH_SHORT).show();
+    //             break;
+    //         case MSG_PAPER_LESS:
+    //             // loopPrintFlag = DEFAULT_LOOP_PRINT;
+    //             Toast.makeText(webView.getContext(), "Printer Out of paper", Toast.LENGTH_SHORT).show();
+    //             break;
+    //         case MSG_PAPER_EXISTS:
+    //             Toast.makeText(webView.getContext(), "Paper available", Toast.LENGTH_SHORT).show();
+    //             break;
+    //         case MSG_THP_HIGH_TEMP:
+    //             Toast.makeText(webView.getContext(), "Printer high temp", Toast.LENGTH_SHORT).show();
+    //             break;
+    //         case MSG_MOTOR_HIGH_TEMP:
+    //             // loopPrintFlag = DEFAULT_LOOP_PRINT;
+    //             Toast.makeText(webView.getContext(), "Printer motor high temp", Toast.LENGTH_SHORT).show();
+    //             handler.sendEmptyMessageDelayed(MSG_MOTOR_HIGH_TEMP_INIT_PRINTER, 180000); // 马达高温报警，等待3分钟后复位打印机
+    //             break;
+    //         case MSG_MOTOR_HIGH_TEMP_INIT_PRINTER:
+    //             printerInit2();
+    //             break;
+    //         default:
+    //             break;
+    //         }
+    //     }
+    // };
 
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -202,7 +202,7 @@ public class ZPOSQ1Printer extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
         if (action.equals("printerInit")) {
-            // if (getPrinterStatus() == PRINTER_NORMAL)
+            if (getPrinterStatus() == PRINTER_NORMAL)
             printerInit(callbackContext);
             return true;
         } else if (action.equals("hasPrinter")) {
@@ -230,9 +230,11 @@ public class ZPOSQ1Printer extends CordovaPlugin {
             printColumnsText(data.getJSONArray(0), data.getJSONArray(1), data.getJSONArray(2), callbackContext);
             return true;
         }
-        // } else if (action.equals("show")) {
-        // show(data.getString(0), callbackContext);
-        // return true;
+         else if (action.equals("printBlankLines")) {
+            if (getPrinterStatus() == PRINTER_NORMAL)
+            printBlankLines(data.getInt(0), data.getInt(0), callbackContext);
+            return true;
+         }
         // } else if (action.equals("printBarCode")) {
         // printBarCode(data.getString(0), data.getInt(1), data.getInt(2),
         // data.getInt(1), data.getInt(2),
@@ -244,11 +246,11 @@ public class ZPOSQ1Printer extends CordovaPlugin {
         // return true;
         // }
         else if (action.equals("printOriginalText")) {
-            // if (getPrinterStatus() == PRINTER_NORMAL)
+            if (getPrinterStatus() == PRINTER_NORMAL)
             printOriginalText(data.getString(0), callbackContext);
             return true;
         } else if (action.equals("printString")) {
-            // if (getPrinterStatus() == PRINTER_NORMAL)
+             if (getPrinterStatus() == PRINTER_NORMAL)
             printString(data.getString(0), callbackContext);
             return true;
         } else if (action.equals("printerStatusStartListener")) {
@@ -258,16 +260,16 @@ public class ZPOSQ1Printer extends CordovaPlugin {
             printerStatusStopListener();
             return true;
         } else if (action.equals("performPrint")) {
-            // if (getPrinterStatus() == PRINTER_NORMAL)
+            if (getPrinterStatus() == PRINTER_NORMAL)
             performPrint(callbackContext);
             return true;
         } else if (action.equals("printTable")) {
-            // if (getPrinterStatus() == PRINTER_NORMAL)
+            if (getPrinterStatus() == PRINTER_NORMAL)
             printTable(data.getJSONArray(0), callbackContext);
             
             return true;
         } else if (action.equals("printSpecFormatText")) {
-            // if (getPrinterStatus() == PRINTER_NORMAL)
+            if (getPrinterStatus() == PRINTER_NORMAL)
             printSpecFormatText(data.getString(0), data.getString(1), data.getInt(2), data.getInt(3), callbackContext);
             return true;
         } else if (action.equals("printSelf")) {
@@ -287,10 +289,10 @@ public class ZPOSQ1Printer extends CordovaPlugin {
             printerStatus = printerService.getPrinterStatus();
         } catch (Exception e) {
             Log.i(TAG, "ERROR: " + e.getMessage());
-            Toast.makeText(webView.getContext(), "Printer Status " + e.getMessage(), Toast.LENGTH_LONG).show();
+           // Toast.makeText(webView.getContext(), "Printer Status " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
         Log.i(TAG, "#### printerStatus" + printerStatus);
-        Toast.makeText(webView.getContext(), "Printer Status " + printerStatus, Toast.LENGTH_LONG).show();
+        // Toast.makeText(webView.getContext(), "Printer Status " + printerStatus, Toast.LENGTH_LONG).show();
         return printerStatus;
     }
 
@@ -325,6 +327,7 @@ public class ZPOSQ1Printer extends CordovaPlugin {
                     });
                 } catch (Exception e) {
                     Log.i(TAG, "ERROR: " + e.getMessage());
+                    callbackContext.error(e.getMessage());
                 }
             }
         });
@@ -798,32 +801,35 @@ public class ZPOSQ1Printer extends CordovaPlugin {
                 try {
                     mIPosPrinterService.setPrinterPrintAlignment(0, callback);
                     mIPosPrinterService.setPrinterPrintFontSize(24, callback);
-                    String[] text = new String[4];
-                    int[] width = new int[] { 10, 4, 6, 7 };
-                    int[] align = new int[] { 0, 1, 2, 2 }; // 左齐,右齐,右齐,右齐
-                    text[0] = "Item";
-                    text[1] = "Qty";
-                    text[2] = "Price";
-                    text[3] = "Total";
+                    String[] text = new String[3];
+                    int[] width = new int[] { 4, 16, 7 };
+                    int[] align = new int[] { 1, 0, 2 }; // 左齐,右齐,右齐,右齐
+                    text[0] = "Qty";
+                    text[1] = "Item";
+                    
+                    // text[2] = "Price";
+                    text[2] = "Total";
                     mIPosPrinterService.printColumnsText(text, width, align, 1, callback);
-                   
+                    int v = 1;
                     for (int i = 0; i < result.length(); i++) {
-
+                        if(i == result.length() - 1) {
+                            v = 0;
+                        }
                         JSONObject r = result.getJSONObject(i);
                        
                             final String[] clst = new String[r.length()];
-                  
-                            clst[0] = r.getString("name");
-                            clst[1] = r.getString("qty");
-                            clst[2] = r.getString("amt");
-                            clst[3] = r.getString("total");
+                            clst[0] = r.getString("qty");
+                            clst[1] = r.getString("name");                  
+                            // clst[2] = r.getString("amt");
+                            clst[2] = r.getString("total");
                        
-                    
-                    mIPosPrinterService.printColumnsText(clst, width, align, 1,new IPosPrinterCallback.Stub() {
+                            final int x = v;
+                    mIPosPrinterService.printColumnsText(clst, width, align, v,new IPosPrinterCallback.Stub() {
                         @Override
                         public void onRunResult(boolean isSuccess) {
+                            
                             if (isSuccess) {
-                                callbackContext.success("");
+                                callbackContext.success(x);
                             } else {
                                 callbackContext.error(isSuccess + "");
                             }
@@ -892,6 +898,7 @@ public class ZPOSQ1Printer extends CordovaPlugin {
 
                 } catch (Exception e) {
                     e.printStackTrace();
+                    callbackContext.error(e.getMessage());
                 }
             }
         });
@@ -939,6 +946,43 @@ public class ZPOSQ1Printer extends CordovaPlugin {
                 try {
 
                     printerService.printerPerformPrint(160, new IPosPrinterCallback.Stub() {
+                        @Override
+                        public void onRunResult(boolean isSuccess) {
+                            if (isSuccess) {
+                                Log.i(TAG, "Success: " + "");
+                            } else {
+                                Log.i(TAG, "Success: " + "");
+                            }
+                        }
+
+                        @Override
+                        public void onReturnString(String result) {
+                            Log.i(TAG, "Success: " + result);
+                        }
+
+                        @Override
+                        public void onRaiseException(int code, String msg) {
+                            Log.i(TAG, "ERROR: " + msg);
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.i(TAG, "ERROR: " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    public void printBlankLines(int lines, int height, final CallbackContext callbackContext) {
+        final IPosPrinterService printerService = mIPosPrinterService;
+        final int l = lines;
+        final int h = height;
+        ThreadPoolManager.getInstance().executeTask(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+
+                    printerService.printBlankLines(l, h, new IPosPrinterCallback.Stub() {
                         @Override
                         public void onRunResult(boolean isSuccess) {
                             if (isSuccess) {

@@ -30,6 +30,9 @@ module.exports = {
     printTextWithFont: function (text, typeface, fontSize, resolve, reject) {
         exec(resolve, reject, "Printer", "printTextWithFont", [text, typeface, fontSize]);
     },
+    printBlankLines: function (lines, height, resolve, reject) {
+        exec(resolve, reject, "Printer", "printBlankLines", [lines, height]);
+    },
     printColumnsText: function (colsTextArr, colsWidthArr, colsAlign, resolve, reject) {
         exec(resolve, reject, "Printer", "printColumnsText", [colsTextArr, colsWidthArr, colsAlign]);
     },
